@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="German Lagger">
+  <title>Pirámide de asteriscos</title>
+  <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGXpXo0IQfBQkJ9hx8dynU3494Z8y1G2hYIA&s" type="image/png">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #242424;
+      user-select: none;
+      color: #f2f2f2;
+      height: 100dvh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 1.1rem;
+    }
+    .App {
+      display: flex;
+      flex-direction: column;
+      max-width: 600px;
+      min-height: 600px;
+      justify-content: center;
+      align-items: center;
+      margin-right: auto;
+      margin-left: auto;
+    }
+    #input_number {
+      width: 100px;
+      padding: 15px;
+      font-size: 2rem;
+      margin-right: 1rem;
+    }
+    .espejar {
+      font-size: 1.5rem;
+    }
+    footer {
+      margin-right: auto;
+      margin-left: auto;
+      font-size: 0.8rem;
+    }
+    #contenido {
+      font-family: monospace;
+      margin-left: auto;margin-right: auto;
+      height: 60dvh;
+      padding: 1rem;
+      font-size: 1.8rem;
+    }
+  </style>
+</head>
+<body>
+  <main class="App">
+    <h1>Formar pirámide de asteriscos</h1>
+    <div>
+      <input id="input_number" type="number" placeholder="0" min="0" max="12" />
+      <input id="input_cbx" type="checkbox" />
+      <label class="espejar" for="input_cbx">¿Espejar?</label>
+    </div>
+    <pre id="contenido"></pre><!-- aca va el contenido -->
+  </main>
+  <footer>
+    <h2>germilagger@gmail.com</h2>
+  </footer>
+  <script>
+    function espejarPiramide(n, piso) {
+      let ePiramide='';
+      let ePiso=1;
+      let espacios = piso;
+      for (i=0;i<n;i++) {
+        for (k=espacios;k>0;k--) {
+          ePiramide += ' ';
+        }
+        espacios--;
+        for (j=0;j<ePiso;j++){
+          ePiramide += '*';
+        }
+        ePiramide += `\n`;
+        ePiso++;
+      }
+      return ePiramide;
+    }
+    function hacerPiramide ( n, espejar=false ) {
+      let piramide='';
+      let piso=1;
+      for (i=0;i<n;i++) {
+        for (j=0;j<piso;j++){
+          piramide += '*';
+        }
+        piramide += `\n`;
+        piso++;
+      }
+      if (espejar) {
+        return espejarPiramide(n, piso);
+      } else {
+        return piramide;
+        }
+    }
+    function actualizarContenido() {
+      let cantidad = document.getElementById("input_number").value;
+      let espejado = document.getElementById("input_cbx").checked;
+      let contenido = document.getElementById("contenido");
+      contenido.textContent = hacerPiramide(cantidad, espejado);
+    }
+    document.getElementById("input_number").addEventListener("input", actualizarContenido);
+    document.getElementById("input_cbx").addEventListener("change", actualizarContenido);
+  </script>
+</body>
+</html>
